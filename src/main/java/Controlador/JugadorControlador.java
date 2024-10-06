@@ -12,9 +12,11 @@ import Vista.JugadorVista;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class JugadorControlador {
 
+    private Scanner sc = new Scanner(System.in);
     private List<JugadorModelo> jugadores;
     private String tipoAlmacenamiento = "texto"; // Valor por defecto
     private final JugadorVista view;
@@ -31,39 +33,29 @@ public class JugadorControlador {
         inicializarFicheros();
         do {
             view.mostrarMenuCargaJugadores();
-            opcion = view.obtenerOpcion();
+            opcion = obtenerOpcion();
 
             switch (opcion) {
                 case 1:
                     tipoAlmacenamiento = "texto";
-//                    leeFicheros.cargarJugadores(tipoAlmacenamiento);
-//                    jugadores = leeFicheros.getJugadores();
-
                     break;
                 case 2:
                     tipoAlmacenamiento = "binario";
-//                    leeFicheros.cargarJugadores(tipoAlmacenamiento);
-//                    jugadores = leeFicheros.getJugadores();
                     break;
                 case 3:
                     tipoAlmacenamiento = "objetos";
-//                    leeFicheros.cargarJugadores(tipoAlmacenamiento);
-//                    jugadores = leeFicheros.getJugadores();
                     break;
                 case 4:
                     tipoAlmacenamiento = "accesoAleatorio";
-//                    leeFicheros.cargarJugadores(tipoAlmacenamiento);
-//                    jugadores = leeFicheros.getJugadores();
                     break;
                 case 5:
                     tipoAlmacenamiento = "xml";
-//                    leeFicheros.cargarJugadores(tipoAlmacenamiento);
-//                    jugadores = leeFicheros.getJugadores();
                     break;
                 default:
                     view.mostrarMensaje("Opción no válida.");
             }
             view.mostrarMensaje("Tipo de guardado: " + tipoAlmacenamiento);
+            
             leeFicheros.cargarJugadores(tipoAlmacenamiento);
             jugadores = leeFicheros.getJugadores();
 
@@ -75,7 +67,7 @@ public class JugadorControlador {
         int opcion;
         do {
             view.mostrarMenuPrincipal();
-            opcion = view.obtenerOpcion();
+            opcion = obtenerOpcion();
 
             switch (opcion) {
                 case 1:
@@ -104,7 +96,7 @@ public class JugadorControlador {
 
     private void subMenuConfiguracion() {
         view.mostrarSubMenuAlmacenamiento();
-        int opcion = view.obtenerOpcion();
+        int opcion = obtenerOpcion();
 
         switch (opcion) {
             case 1:
@@ -132,7 +124,7 @@ public class JugadorControlador {
     }
 
     private void agregarJugador() {
-        JugadorModelo jugador = view.obtenerDatosJugador();
+        JugadorModelo jugador = obtenerDatosJugador();
         jugadores.add(jugador);
         GUARDADO.guardarJugador(jugador, tipoAlmacenamiento);
         view.mostrarMensaje(GUARDADO.getMensajeGuardado());
@@ -148,12 +140,12 @@ public class JugadorControlador {
 
     private void modificarJugador() {
         view.mostrarMensaje("Ingrese el ID del jugador a modificar:");
-        int id = view.obtenerOpcion();
+        int id = obtenerOpcion();
         JugadorModelo jugador = buscarJugadorPorId(id);
 
         if (jugador != null) {
             view.mostrarMensaje("Jugador encontrado: " + jugador);
-            JugadorModelo datosModificados = view.obtenerDatosJugador();
+            JugadorModelo datosModificados = obtenerDatosJugador();
 
             // Actualizar los campos
             jugador.setNick_name(datosModificados.getNick_name());
@@ -169,7 +161,7 @@ public class JugadorControlador {
 
     private void eliminarJugador() {
         view.mostrarMensaje("Ingrese el ID del jugador a eliminar:");
-        int id = view.obtenerOpcion();
+        int id = obtenerOpcion();
         JugadorModelo jugador = buscarJugadorPorId(id);
 
         if (jugador != null) {
@@ -196,5 +188,34 @@ public class JugadorControlador {
             GUARDADO.guardarJugador(jugador, tipoAlmacenamiento);
             view.mostrarMensaje(GUARDADO.getMensajeGuardado());
         }
+    }
+
+    public JugadorModelo obtenerDatosJugador() {
+        JugadorModelo jugador = new JugadorModelo();
+
+        if (!jugadores.isEmpty()) {
+            int ultimoId = jugadores.get(jugadores.size() - 1).getId();
+            jugador.setId(ultimoId + 1);
+        } else {
+            jugador.setId(0);
+        }
+        sc.nextLine();  // Limpiar buffer
+        view.mostrarMensaje("Ingrese nick_name: ");
+        jugador.setNick_name(sc.nextLine());
+
+        view.mostrarMensaje("Ingrese experiencia: ");
+        jugador.setExperience(sc.nextInt());
+
+        view.mostrarMensaje("Ingrese nivel de vida: ");
+        jugador.setLife_level(sc.nextInt());
+
+        view.mostrarMensaje("Ingrese monedas: ");
+        jugador.setCoins(sc.nextInt());
+
+        return jugador;
+    }
+
+    public int obtenerOpcion() {
+        return sc.nextInt();
     }
 }

@@ -4,17 +4,21 @@
  */
 package Vista;
 
-import Modelo.JugadorModelo;
-
-import java.util.Scanner;
-
 public class JugadorVista {
 
-    private Scanner scanner = new Scanner(System.in);
-
     public void limpiarConsola() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+        try {
+            if (System.getProperty("os.name").contains("Windows")) {
+                // Comando para Windows
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                // Comando para Unix/Linux/Mac
+                System.out.print("\033[H\033[2J");
+                System.out.flush();
+            }
+        } catch (Exception e) {
+            System.out.println("Error al limpiar la consola: " + e.getMessage());
+        }
     }
 
     public void mostrarMenuCargaJugadores() {
@@ -47,28 +51,8 @@ public class JugadorVista {
         System.out.println("5. Fichero de texto XML");
     }
 
-    public JugadorModelo obtenerDatosJugador() {
-        limpiarConsola();
-        System.out.print("Ingrese ID del jugador: ");
-        int id = scanner.nextInt();
-        scanner.nextLine();  // Limpiar buffer
-        System.out.print("Ingrese nick_name: ");
-        String nick_name = scanner.nextLine();
-        System.out.print("Ingrese experiencia: ");
-        int experience = scanner.nextInt();
-        System.out.print("Ingrese nivel de vida: ");
-        int life_level = scanner.nextInt();
-        System.out.print("Ingrese monedas: ");
-        int coins = scanner.nextInt();
-        return new JugadorModelo(id, nick_name, experience, life_level, coins);
-    }
-
     public void mostrarJugadores(String jugadores) {
         System.out.println(jugadores);
-    }
-
-    public int obtenerOpcion() {
-        return scanner.nextInt();
     }
 
     public void mostrarMensaje(String mensaje) {

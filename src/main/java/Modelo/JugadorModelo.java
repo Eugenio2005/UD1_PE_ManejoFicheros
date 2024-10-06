@@ -12,6 +12,9 @@ public class JugadorModelo implements Serializable {
     private int experience;
     private int life_level;
     private int coins;
+    
+    public JugadorModelo() {
+    }
 
     public JugadorModelo(int id, String nick_name, int experience, int life_level, int coins) {
         this.id = id;
