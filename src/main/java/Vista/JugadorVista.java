@@ -4,25 +4,25 @@
  */
 package Vista;
 
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
+
 public class JugadorVista {
 
-    public void limpiarConsola() {
-        try {
-            if (System.getProperty("os.name").contains("Windows")) {
-                // Comando para Windows
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            } else {
-                // Comando para Unix/Linux/Mac
-                System.out.print("\033[H\033[2J");
-                System.out.flush();
-            }
-        } catch (Exception e) {
-            System.out.println("Error al limpiar la consola: " + e.getMessage());
-        }
+    public void limpiarConsola(){
+//        try {
+//            Robot limpiar = new Robot();
+//            limpiar.keyPress(KeyEvent.VK_CONTROL);
+//            limpiar.keyPress(KeyEvent.VK_L);
+//            limpiar.keyRelease(KeyEvent.VK_CONTROL);
+//            limpiar.keyRelease(KeyEvent.VK_L);
+//
+//        } catch (Exception e) {
+//            System.out.println("Error al limpiar la pantalla" + e.getMessage());
+//        }
     }
 
     public void mostrarMenuCargaJugadores() {
-        limpiarConsola();
         System.out.println("Seleccione el fichero que vamos a cargar:");
         System.out.println("1. Fichero secuencial de texto");
         System.out.println("2. Fichero secuencial binario");
@@ -31,17 +31,18 @@ public class JugadorVista {
         System.out.println("5. Fichero de texto XML");
     }
 
-    public void mostrarMenuPrincipal() {
+    public void mostrarMenuPrincipal(){
         limpiarConsola();
         System.out.println("1. Agregar Jugador");
-        System.out.println("2. Listar Jugadores");
+        System.out.println("2. Eliminar Jugador");
         System.out.println("3. Modificar Jugador");
-        System.out.println("4. Eliminar Jugador");
-        System.out.println("5. Configuración");
-        System.out.println("6. Salir");
+        System.out.println("4. Listar Jugadores");
+        System.out.println("5. Listar Jugadores por ID");
+        System.out.println("6. Configuración");
+        System.out.println("7. Salir");
     }
 
-    public void mostrarSubMenuAlmacenamiento() {
+    public void mostrarSubMenuAlmacenamiento(){
         limpiarConsola();
         System.out.println("Seleccione el tipo de almacenamiento:");
         System.out.println("1. Fichero secuencial de texto");

@@ -10,7 +10,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class LeerFicheros {
-    
+
     private final String RUTA_GUARDADO = new InicializadorFicheros().getRuta_Guardados();
     private ArrayList<JugadorModelo> jugadores;
 
@@ -41,7 +41,7 @@ public class LeerFicheros {
     }
 
     private void leerFicheroTexto() {
-        try (BufferedReader br = new BufferedReader(new FileReader(RUTA_GUARDADO +"/jugadores.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(RUTA_GUARDADO + "/jugadores.txt"))) {
             String linea;
             while ((linea = br.readLine()) != null) {
                 // Eliminar los corchetes
@@ -76,7 +76,7 @@ public class LeerFicheros {
     }
 
     private void leerFicheroBinario() {
-        try (DataInputStream dis = new DataInputStream(new FileInputStream(RUTA_GUARDADO +"/jugadores.bin"))) {
+        try (DataInputStream dis = new DataInputStream(new FileInputStream(RUTA_GUARDADO + "/jugadores.dat"))) {
             while (true) {
                 int id = dis.readInt();
                 String nickName = dis.readUTF();
@@ -94,7 +94,7 @@ public class LeerFicheros {
     }
 
     private void leerFicheroObjetos() {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(RUTA_GUARDADO +"/jugadores.obj"))) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(RUTA_GUARDADO + "/jugadores_objetos.dat"))) {
             while (true) {
                 JugadorModelo jugador = (JugadorModelo) ois.readObject();
                 jugadores.add(jugador);
@@ -107,7 +107,7 @@ public class LeerFicheros {
     }
 
     private void leerFicheroAccesoAleatorio() {
-        try (RandomAccessFile raf = new RandomAccessFile(RUTA_GUARDADO +"/jugadores.dat", "r")) {
+        try (RandomAccessFile raf = new RandomAccessFile(RUTA_GUARDADO + "/jugadores_acceso_aleatorio.dat", "r")) {
             while (raf.getFilePointer() < raf.length()) {
                 int id = raf.readInt();
                 String nickName = raf.readUTF();

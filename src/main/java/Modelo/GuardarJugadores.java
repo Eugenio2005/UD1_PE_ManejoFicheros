@@ -12,12 +12,16 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Text;
 
 public class GuardarJugadores {
 
@@ -33,10 +37,10 @@ public class GuardarJugadores {
         return mensajeGuardado;
     }
 
-    public void guardarJugador(JugadorModelo jugador, String tipoAlmacenamiento) {
+    public void guardarJugador(JugadorModelo jugador, String tipoAlmacenamiento){
         leeFicheros.cargarJugadores(tipoAlmacenamiento);
-        List<JugadorModelo> jugadores = leeFicheros.getJugadores();      
-        
+        List<JugadorModelo> jugadores = leeFicheros.getJugadores();
+
         switch (tipoAlmacenamiento) {
             case "texto":
                 guardarJugadorEnTexto(jugadores, jugador);
@@ -58,25 +62,27 @@ public class GuardarJugadores {
 
     private void guardarJugadorEnTexto(List<JugadorModelo> jugadoresExistentes, JugadorModelo jugador) {
         String rutaArchivo = RUTA_GUARDADO + "/jugadores.txt";
+
+        //if (!jugadoresExistentes.contains(jugador)) {
         
-        
-        
-        if (!jugadoresExistentes.contains(jugador)) {
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo, true))) {
-                writer.write(jugador.toString());
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo))) {
+                for (JugadorModelo jugador1 : jugadoresExistentes) {
+                writer.write(jugador1.toString());
                 writer.newLine();
+                }
                 setMensajeGuardado("Jugador guardado en fichero de texto.");
             } catch (IOException e) {
                 setMensajeGuardado("Error al guardar el jugador en texto: " + e.getMessage());
             }
+        
 
-        }
+        //}
     }
 
     private void guardarJugadorEnBinario(List<JugadorModelo> jugadoresExistentes, JugadorModelo jugador) {
-        String rutaArchivo = RUTA_GUARDADO + "/jugadores.bin";
+        String rutaArchivo = RUTA_GUARDADO + "/jugadores.dat";
 
-        if (!jugadoresExistentes.contains(jugador)) {
+        //if (!jugadoresExistentes.contains(jugador)) {
             try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(rutaArchivo, true))) {
                 dos.writeInt(jugador.getId());
                 dos.writeUTF(jugador.getNick_name());
@@ -87,26 +93,26 @@ public class GuardarJugadores {
             } catch (IOException e) {
                 setMensajeGuardado("Error al guardar el jugador en binario: " + e.getMessage());
             }
-        }
+        //}
     }
 
     private void guardarJugadorEnObjetos(List<JugadorModelo> jugadoresExistentes, JugadorModelo jugador) {
-        String rutaArchivo = RUTA_GUARDADO + "/jugadores.obj";
+        String rutaArchivo = RUTA_GUARDADO + "/jugadores_objetos.dat";
 
-        if (!jugadoresExistentes.contains(jugador)) {
+        //if (!jugadoresExistentes.contains(jugador)) {
             try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(rutaArchivo, true))) {
                 oos.writeObject(jugador);
                 setMensajeGuardado("Jugador guardado en fichero de objetos.");
             } catch (IOException e) {
                 setMensajeGuardado("Error al guardar el jugador en objetos: " + e.getMessage());
             }
-        }
+        //}
     }
 
     private void guardarJugadorEnAccesoAleatorio(List<JugadorModelo> jugadoresExistentes, JugadorModelo jugador) {
-        String rutaArchivo = RUTA_GUARDADO + "/jugadores.dat";
+        String rutaArchivo = RUTA_GUARDADO + "/jugadores_acceso_aleatorio.dat";
 
-        if (!jugadoresExistentes.contains(jugador)) {
+        //if (!jugadoresExistentes.contains(jugador)) {
             try (RandomAccessFile raf = new RandomAccessFile(rutaArchivo, "rw")) {
                 raf.seek(raf.length()); // Ir al final del archivo
                 raf.writeInt(jugador.getId());
@@ -118,13 +124,13 @@ public class GuardarJugadores {
             } catch (IOException e) {
                 setMensajeGuardado("Error al guardar el jugador en acceso aleatorio: " + e.getMessage());
             }
-        }
+        //}
     }
 
     private void guardarJugadorEnXML(List<JugadorModelo> jugadoresExistentes, JugadorModelo jugador) {
         String rutaArchivo = RUTA_GUARDADO + "/jugadores.xml";
-
-        if (!jugadoresExistentes.contains(jugador)) {
+        
+        //if (!jugadoresExistentes.contains(jugador)) {
             try {
                 // Creación o actualización del fichero XML
                 DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -174,11 +180,11 @@ public class GuardarJugadores {
                 StreamResult result = new StreamResult(archivoXML);
                 transformer.transform(source, result);
 
-                setMensajeGuardado("Jugador guardado en fichero XML.");
+                //setMensajeGuardado("Jugador guardado en fichero XML.");
             } catch (Exception e) {
                 setMensajeGuardado("Error al guardar el jugador en XML: " + e.getMessage());
             }
-        }
+            setMensajeGuardado("Jugador guardado en fichero XML.");
+        //}
     }
-
 }

@@ -5,6 +5,7 @@
 package Modelo;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class JugadorModelo implements Serializable {
     private int id;
@@ -73,8 +74,9 @@ public class JugadorModelo implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 47 * hash + this.id;
+        int hash = 5;
+        hash = 97 * hash + this.id;
+        hash = 97 * hash + Objects.hashCode(this.nick_name);
         return hash;
     }
 
@@ -92,7 +94,8 @@ public class JugadorModelo implements Serializable {
         final JugadorModelo other = (JugadorModelo) obj;
         return this.id == other.id;
     }
-    
+
+   
     
 }
 
