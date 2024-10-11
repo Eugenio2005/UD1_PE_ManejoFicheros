@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Controlador;
 
 import static Modelo.InicializadorFicheros.inicializarFicheros;
@@ -20,14 +16,22 @@ public class JugadorControlador {
     private String tipoAlmacenamiento = "texto"; // Valor por defecto
     private final JugadorVista view;
     private final LeerFicheros leeFicheros = new LeerFicheros();
-//    private final GuardarJugadores GUARDADO = new GuardarJugadores();
-    private final GuardarJugadores2 GUARDADO2 = new GuardarJugadores2();
-    
+    private final GuardarJugadores GUARDADO = new GuardarJugadores();
+
+    /**
+     * Constructor de la clase JugadorControlador.
+     *
+     * @param view La vista que mostrará la información al usuario.
+     */
     public JugadorControlador(JugadorVista view) {
         this.view = view;
         this.jugadores = new ArrayList<>();
     }
 
+    /**
+     * Método que inicia el proceso de interacción del usuario con el sistema.
+     * Carga los jugadores desde el tipo de almacenamiento seleccionado.
+     */
     public void iniciar() {
         int opcion;
         inicializarFicheros();
@@ -63,12 +67,16 @@ public class JugadorControlador {
         MenuInicial();
     }
 
+    /**
+     * Método que muestra el menú principal y permite la interacción del usuario
+     * con las diferentes opciones de CRUD sobre los jugadores.
+     */
     public void MenuInicial() {
         int opcion;
         do {
             view.mostrarMenuPrincipal();
             opcion = obtenerOpcion();
-
+            view.limpiarConsola();
             switch (opcion) {
                 case 1:
                     agregarJugador();
@@ -97,6 +105,10 @@ public class JugadorControlador {
         } while (opcion != 7);
     }
 
+    /**
+     * Muestra el submenú de configuración que permite al usuario cambiar el
+     * tipo de almacenamiento.
+     */
     private void subMenuConfiguracion() {
         view.mostrarSubMenuAlmacenamiento();
         int opcion = obtenerOpcion();
@@ -127,15 +139,18 @@ public class JugadorControlador {
         jugadores = leeFicheros.getJugadores();
     }
 
+    /**
+     * Método que permite agregar un nuevo jugador al sistema.
+     */
     public void agregarJugador() {
         JugadorModelo jugador = obtenerDatosJugador();
         jugadores.add(jugador);
-//        GUARDADO.guardarJugador(jugador, tipoAlmacenamiento);
         guardarJugadores();
-//        GUARDADO2.guardarJugador(tipoAlmacenamiento);
-//        view.mostrarMensaje(GUARDADO2.getMensajeGuardado());
     }
 
+    /**
+     * Muestra una lista de todos los jugadores.
+     */
     private void listarJugadores() {
         StringBuilder listado = new StringBuilder();
         for (JugadorModelo jugador : jugadores) {
@@ -144,6 +159,9 @@ public class JugadorControlador {
         view.mostrarJugadores(listado.toString());
     }
 
+    /**
+     * Busca y muestra un jugador por su ID.
+     */
     private void listarJugadoresID() {
         view.mostrarMensaje("Ingrese el ID del jugador:");
         int id = obtenerOpcion();
@@ -156,6 +174,9 @@ public class JugadorControlador {
         }
     }
 
+    /**
+     * Modifica los datos de un jugador existente.
+     */
     private void modificarJugador() {
         view.mostrarMensaje("Ingrese el ID del jugador a modificar:");
         int id = obtenerOpcion();
@@ -167,9 +188,9 @@ public class JugadorControlador {
 
             // Actualizar los campos
             jugador.setNick_name(datosModificados.getNick_name());
-            jugador.setExperience(datosModificados.getExperience());
-            jugador.setLife_level(datosModificados.getLife_level());
-            jugador.setCoins(datosModificados.getCoins());
+            jugador.setExperiencia(datosModificados.getExperiencia());
+            jugador.setNivel_vida(datosModificados.getNivel_vida());
+            jugador.setMonedas(datosModificados.getMonedas());
             view.mostrarMensaje("Jugador modificado con éxito.");
 
             guardarJugadores(); // Guarda todos los jugadores después de modificar
@@ -178,6 +199,9 @@ public class JugadorControlador {
         }
     }
 
+    /**
+     * Elimina un jugador del sistema.
+     */
     private void eliminarJugador() {
         view.mostrarMensaje("Ingrese el ID del jugador a eliminar:");
         int id = obtenerOpcion();
@@ -192,6 +216,12 @@ public class JugadorControlador {
         }
     }
 
+    /**
+     * Busca un jugador por su ID.
+     *
+     * @param id El ID del jugador.
+     * @return El jugador encontrado o null si no existe.
+     */
     private JugadorModelo buscarJugadorPorId(int id) {
         for (JugadorModelo jugador : jugadores) {
             if (jugador.getId() == id) {
@@ -202,14 +232,22 @@ public class JugadorControlador {
         return null;
     }
 
+    /**
+     * Guarda todos los jugadores en el tipo de almacenamiento seleccionado.
+     */
     private void guardarJugadores() {
 //        for (JugadorModelo jugador : jugadores) {
 //            GUARDADO.guardarJugador(jugador, tipoAlmacenamiento);
-            GUARDADO2.guardarJugador(jugadores,tipoAlmacenamiento);
+        GUARDADO.guardarJugador(jugadores, tipoAlmacenamiento);
 //        }
-        view.mostrarMensaje(GUARDADO2.getMensajeGuardado());
+        view.mostrarMensaje(GUARDADO.getMensajeGuardado());
     }
 
+    /**
+     * Obtiene los datos de un nuevo jugador desde la entrada del usuario.
+     *
+     * @return Un nuevo objeto JugadorModelo con los datos proporcionados.
+     */
     public JugadorModelo obtenerDatosJugador() {
         JugadorModelo jugador = new JugadorModelo();
 
@@ -224,20 +262,26 @@ public class JugadorControlador {
         jugador.setNick_name(sc.nextLine());
 
         view.mostrarMensaje("Ingrese experiencia: ");
-        jugador.setExperience(validarExperienciaVida(sc));
+        jugador.setExperiencia(validarExperienciaVida(sc));
         sc.nextLine();
 
         view.mostrarMensaje("Ingrese nivel de vida: ");
-        jugador.setLife_level(validarExperienciaVida(sc));
+        jugador.setNivel_vida(validarExperienciaVida(sc));
         sc.nextLine();
 
         view.mostrarMensaje("Ingrese monedas: ");
-        jugador.setCoins(validarMonedas(sc));
+        jugador.setMonedas(validarMonedas(sc));
         sc.nextLine();
 
         return jugador;
     }
 
+    /**
+     * Valida la experiencia o el nivel de vida ingresado.
+     *
+     * @param scanner El objeto Scanner para la entrada del usuario.
+     * @return Un valor entero entre 0 y 100.
+     */
     private int validarExperienciaVida(Scanner scanner) {
         int n;
         do {
@@ -251,6 +295,12 @@ public class JugadorControlador {
         return n;
     }
 
+    /**
+     * Valida la cantidad de monedas ingresada.
+     *
+     * @param scanner El objeto Scanner para la entrada del usuario.
+     * @return Un valor entero entre 0 y 100.000.
+     */
     private int validarMonedas(Scanner scanner) {
         int n;
         do {
@@ -264,6 +314,11 @@ public class JugadorControlador {
         return n;
     }
 
+    /**
+     * Obtiene la opción ingresada por el usuario.
+     *
+     * @return Un entero que representa la opción seleccionada por el usuario.
+     */
     public int obtenerOpcion() {
         //return sc.nextInt();
         int n;

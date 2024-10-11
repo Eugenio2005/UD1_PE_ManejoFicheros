@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Modelo;
 
 import java.io.Serializable;
@@ -10,19 +7,19 @@ import java.util.Objects;
 public class JugadorModelo implements Serializable {
     private int id;
     private String nick_name;
-    private int experience;
-    private int life_level;
-    private int coins;
+    private int experiencia;
+    private int nivel_vida;
+    private int monedas;
     
     public JugadorModelo() {
     }
 
-    public JugadorModelo(int id, String nick_name, int experience, int life_level, int coins) {
+    public JugadorModelo(int id, String nick_name, int experiencia, int nivel_vida, int monedas) {
         this.id = id;
         this.nick_name = nick_name;
-        this.experience = experience;
-        this.life_level = life_level;
-        this.coins = coins;
+        this.experiencia = experiencia;
+        this.nivel_vida = nivel_vida;
+        this.monedas = monedas;
     }
 
     // Getters y Setters
@@ -42,34 +39,34 @@ public class JugadorModelo implements Serializable {
         this.nick_name = nick_name;
     }
 
-    public int getExperience() {
-        return experience;
+    public int getExperiencia() {
+        return experiencia;
     }
 
-    public void setExperience(int experience) {
-        this.experience = experience;
+    public void setExperiencia(int experiencia) {
+        this.experiencia = experiencia;
     }
 
-    public int getLife_level() {
-        return life_level;
+    public int getNivel_vida() {
+        return nivel_vida;
     }
 
-    public void setLife_level(int life_level) {
-        this.life_level = life_level;
+    public void setNivel_vida(int nivel_vida) {
+        this.nivel_vida = nivel_vida;
     }
 
-    public int getCoins() {
-        return coins;
+    public int getMonedas() {
+        return monedas;
     }
 
-    public void setCoins(int coins) {
-        this.coins = coins;
+    public void setMonedas(int monedas) {
+        this.monedas = monedas;
     }
 
     @Override
     public String toString() {
-        return "[USER_ID = " + id + ", NICK_NAME = " + nick_name + ", EXPERIENCE = " + experience
-                + ", LIFE_LEVEL = " + life_level + ", COINS = " + coins + "]";
+        return "[USER_ID = " + id + ", NOMBRE = " + nick_name + ", EXPERIENCIA = " + experiencia
+                + ", NIVEL_VIDA = " + nivel_vida + ", MONEDAS = " + monedas + "]";
     }
 
     @Override

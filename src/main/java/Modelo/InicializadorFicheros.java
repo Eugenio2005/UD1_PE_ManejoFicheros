@@ -1,34 +1,26 @@
 
 package Modelo;
 
-import java.io.*;
-import java.io.BufferedWriter;
-import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.RandomAccessFile;
-import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Text;
 
 public class InicializadorFicheros {
 
     private static final String CARPETA_FICHEROS = "ficheros_jugadores"; // Nombre de la carpeta
 
+    /**
+     * Inicializa la carpeta y los ficheros necesarios en el directorio del proyecto.
+     * Crea la carpeta "ficheros_jugadores" y los diferentes tipos de ficheros.
+     */
     public static void inicializarFicheros() {
         // Crea la carpeta "ficheros_jugadores" en el directorio raíz del proyecto si no existe
         File carpeta = new File(CARPETA_FICHEROS);
@@ -77,6 +69,9 @@ public class InicializadorFicheros {
         }
     }
     
+    /**
+     * Crea un archivo XML vacío con la estructura básica.
+     */
     private static void crearArchivoXmlVacio() {
         try {
             // Crear la instancia del DocumentBuilderFactory
@@ -100,6 +95,12 @@ public class InicializadorFicheros {
         }
     }
     
+    /**
+     * Guarda el documento XML en un archivo.
+     *
+     * @param doc El documento XML a guardar.
+     * @param nombreArchivo El nombre del archivo donde se guardará el XML.
+     */
     private static void guardarXmlEnArchivo(Document doc, String nombreArchivo) {
         try {
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -120,6 +121,12 @@ public class InicializadorFicheros {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Devuelve la ruta donde se guardan los ficheros.
+     *
+     * @return La ruta de la carpeta donde se guardan los ficheros.
+     */
     public String getRuta_Guardados() {
         return CARPETA_FICHEROS;
     }

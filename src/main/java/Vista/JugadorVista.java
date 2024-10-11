@@ -10,19 +10,12 @@ import java.awt.event.KeyEvent;
 public class JugadorVista {
 
     public void limpiarConsola(){
-//        try {
-//            Robot limpiar = new Robot();
-//            limpiar.keyPress(KeyEvent.VK_CONTROL);
-//            limpiar.keyPress(KeyEvent.VK_L);
-//            limpiar.keyRelease(KeyEvent.VK_CONTROL);
-//            limpiar.keyRelease(KeyEvent.VK_L);
-//
-//        } catch (Exception e) {
-//            System.out.println("Error al limpiar la pantalla" + e.getMessage());
-//        }
+        for (int i = 0; i < 25; i++) {
+            System.out.println("\n");
+        }
     }
 
-    public void mostrarMenuCargaJugadores() {
+    public void mostrarMenuCargaJugadores() { 
         System.out.println("Seleccione el fichero que vamos a cargar:");
         System.out.println("1. Fichero secuencial de texto");
         System.out.println("2. Fichero secuencial binario");
@@ -32,7 +25,6 @@ public class JugadorVista {
     }
 
     public void mostrarMenuPrincipal(){
-        limpiarConsola();
         System.out.println("1. Agregar Jugador");
         System.out.println("2. Eliminar Jugador");
         System.out.println("3. Modificar Jugador");
@@ -43,7 +35,6 @@ public class JugadorVista {
     }
 
     public void mostrarSubMenuAlmacenamiento(){
-        limpiarConsola();
         System.out.println("Seleccione el tipo de almacenamiento:");
         System.out.println("1. Fichero secuencial de texto");
         System.out.println("2. Fichero secuencial binario");

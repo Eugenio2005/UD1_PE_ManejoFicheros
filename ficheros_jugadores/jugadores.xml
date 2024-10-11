@@ -1,2 +1,1 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<jugadores/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><jugadores><jugador><id>0</id><nick_name>Luis</nick_name><experiencia>100</experiencia><nivel_vida>100</nivel_vida><monedas>100000</monedas></jugador><jugador><id>1</id><nick_name>Vitor</nick_name><experiencia>100</experiencia><nivel_vida>0</nivel_vida><monedas>50000</monedas></jugador><jugador><id>2</id><nick_name>Julian</nick_name><experiencia>0</experiencia><nivel_vida>100</nivel_vida><monedas>0</monedas></jugador><jugador><id>3</id><nick_name>Anda</nick_name><experiencia>50</experiencia><nivel_vida>50</nivel_vida><monedas>100000</monedas></jugador></jugadores>
